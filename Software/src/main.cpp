@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <BleKeyboard.h>
+#include "pin_def.h"
 
 BleKeyboard bleKeyboard;
 
