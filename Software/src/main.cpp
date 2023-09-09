@@ -1,22 +1,15 @@
 #include <Arduino.h>
 #include <BleKeyboard.h>
 #include "pin_def.h"
-#include <AiEsp32RotaryEncoder.h>
 
-// rotary Encoder
-#define ROTARY_ENCODER_VCC_PIN -1
-#define ROTARY_ENCODER_STEPS 2
+
 
 // paramaters for buttons
 unsigned long shortPressAfterMiliseconds = 50;   //how long short press shoud be. Do not set too low to avoid bouncing (false press events).
 unsigned long longPressAfterMiliseconds = 1000;  //how long čong press shoud be.
 
 
-AiEsp32RotaryEncoder Encoder_1 = AiEsp32RotaryEncoder(ENC1_A, ENC1_B, ENC1_BTN, ROTARY_ENCODER_VCC_PIN, ROTARY_ENCODER_STEPS);
-AiEsp32RotaryEncoder Encoder_2 = AiEsp32RotaryEncoder(ENC2_A, ENC2_B, ENC2_BTN, ROTARY_ENCODER_VCC_PIN, ROTARY_ENCODER_STEPS);
-AiEsp32RotaryEncoder Encoder_3 = AiEsp32RotaryEncoder(ENC3_A, ENC3_B, ENC3_BTN, ROTARY_ENCODER_VCC_PIN, ROTARY_ENCODER_STEPS);
-AiEsp32RotaryEncoder Encoder_4 = AiEsp32RotaryEncoder(ENC4_A, ENC4_B, ENC4_BTN, ROTARY_ENCODER_VCC_PIN, ROTARY_ENCODER_STEPS);
-AiEsp32RotaryEncoder Encoder_5 = AiEsp32RotaryEncoder(ENC5_A, ENC5_B, ENC5_BTN, ROTARY_ENCODER_VCC_PIN, ROTARY_ENCODER_STEPS);
+
 BleKeyboard bleKeyboard;
 
 void setup() {
@@ -57,6 +50,6 @@ void loop() {
   }
 
   Serial.println("Waiting 5 seconds...");
-  delay(5000);
+  delay(1000);
 }
 
