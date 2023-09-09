@@ -2,24 +2,24 @@
 
 // U2 Connector
 #define ENC1_BTN 4 
-#define ENC1_A 5
-#define ENC1_B 6
+#define ENC1_A 6
+#define ENC1_B 5
 // U3 Connector
 #define ENC2_BTN 7
-#define ENC2_A 15
-#define ENC2_B 16
+#define ENC2_A 16
+#define ENC2_B 15
 // U4 Connector
 #define ENC3_BTN 17
-#define ENC3_A 18
-#define ENC3_B 8
+#define ENC3_A 8
+#define ENC3_B 18
 // U5 Connector
 #define ENC4_BTN 28
-#define ENC4_A 29
-#define ENC4_B 30
+#define ENC4_A 30
+#define ENC4_B 29
 // U6 Connector
 #define ENC5_BTN 9
-#define ENC5_A 10
-#define ENC5_B 11
+#define ENC5_A 11
+#define ENC5_B 10
 // Pedal 1 Connector
 #define PED1 12
 // Pedal 2 Connector
