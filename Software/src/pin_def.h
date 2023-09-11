@@ -13,9 +13,9 @@
 #define ENC3_A 8
 #define ENC3_B 18
 // U5 Connector
-#define ENC4_BTN 28
-#define ENC4_A 30
-#define ENC4_B 29
+#define ENC4_BTN 35
+#define ENC4_A 37
+#define ENC4_B 36
 // U6 Connector
 #define ENC5_BTN 9
 #define ENC5_A 11
