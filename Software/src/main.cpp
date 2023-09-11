@@ -70,16 +70,21 @@ void loop() {
 
 
   // Encoder test
+  static uint32_t lastService = 0;
+  if (micros() - lastService >= 1000) {
+    lastService = micros();                
+
    for (int i = 0; i < ENCODER_COUNT; i++) {
     encoders[i].service();
-    int16_t value = encoders[i].getValue();
     static int16_t lastValue[ENCODER_COUNT] = {0};
-    if (value != lastValue[i]) {
-      lastValue[i] = value;
+    static int16_t value[ENCODER_COUNT] = {0};
+    value[i] += encoders[i].getValue();
+    if (value[i] != lastValue[i]) {
+      lastValue[i] = value[i];
       Serial.print("Encoder ");
       Serial.print(i + 1);
       Serial.print(" Value: ");
-      Serial.println(value);
+      Serial.println(value[i]);
     }
 
     ClickEncoder::Button button = encoders[i].getButton();
@@ -105,6 +110,7 @@ void loop() {
           break;
       }
     }
+  }
   }
 
 }
