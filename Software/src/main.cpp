@@ -43,32 +43,23 @@ void setup() {
   encoder4.setDoubleClickEnabled(true);
   encoder5.setButtonHeldEnabled(true);
   encoder5.setDoubleClickEnabled(true);
-  // pedal1.setButtonHeldEnabled(true);
-  // pedal1.setDoubleClickEnabled(true);
-  // pedal2.setButtonHeldEnabled(true);
-  // pedal2.setButtonHeldEnabled(true);
 
   bleKeyboard.begin();
 }
 
 void loop() {
   if(bleKeyboard.isConnected()) {
-    Serial.println("Sending 'Hello world'...");
-    bleKeyboard.print("Hello world");
+ 
+    // Keyboard examples
+    // Serial.println("Sending 'Hello world'...");
+    // bleKeyboard.print("Hello world");
 
-    // delay(1000);
+    // Serial.println("Sending Enter key...");
+    // bleKeyboard.write(KEY_RETURN);
 
-    Serial.println("Sending Enter key...");
-    bleKeyboard.write(KEY_RETURN);
+    // Serial.println("Sending Play/Pause media key...");
+    // bleKeyboard.write(KEY_MEDIA_PLAY_PAUSE);
 
-    // delay(1000);
-
-    Serial.println("Sending Play/Pause media key...");
-    bleKeyboard.write(KEY_MEDIA_PLAY_PAUSE);
-
-    // delay(1000);
-
-   //
    // Below is an example of pressing multiple keyboard modifiers 
    // which by default is commented out.
     /*
@@ -81,8 +72,7 @@ void loop() {
     */
     }
 
-  // Serial.println("Waiting 5 seconds...");
-  // delay(1000);
+
 
 
   // Encoder test
