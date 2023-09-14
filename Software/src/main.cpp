@@ -14,13 +14,17 @@ unsigned long longPressAfterMiliseconds = 1000;  //how long čong press shoud be
 #define ENCODER_COUNT 5
 #define ENCODER_STEPS_PER_NOTCH    4   // Change this depending on which encoder is used
 
-ClickEncoder encoder0(ENC1_A,ENC1_B,ENC1_BTN,ENCODER_STEPS_PER_NOTCH);
-ClickEncoder encoder1(ENC2_A,ENC2_B,ENC2_BTN,ENCODER_STEPS_PER_NOTCH);
-ClickEncoder encoder2(ENC3_A,ENC3_B,ENC3_BTN,ENCODER_STEPS_PER_NOTCH);
-ClickEncoder encoder3(ENC4_A,ENC4_B,ENC4_BTN,ENCODER_STEPS_PER_NOTCH);
-ClickEncoder encoder4(ENC5_A,ENC5_B,ENC5_BTN,ENCODER_STEPS_PER_NOTCH);
 
-ClickEncoder encoders[ENCODER_COUNT] = {encoder0, encoder1, encoder2, encoder3, encoder4};
+ClickEncoder encoder1(ENC1_A,ENC1_B,ENC1_BTN,ENCODER_STEPS_PER_NOTCH);
+ClickEncoder encoder2(ENC2_A,ENC2_B,ENC2_BTN,ENCODER_STEPS_PER_NOTCH);
+ClickEncoder encoder3(ENC3_A,ENC3_B,ENC3_BTN,ENCODER_STEPS_PER_NOTCH);
+ClickEncoder encoder4(ENC4_A,ENC4_B,ENC4_BTN,ENCODER_STEPS_PER_NOTCH);
+ClickEncoder encoder5(ENC5_A,ENC5_B,ENC5_BTN,ENCODER_STEPS_PER_NOTCH);
+
+ClickEncoder encoders[ENCODER_COUNT] = {encoder1, encoder2, encoder3, encoder4, encoder5};
+
+DigitalButton btn1(PED1, false);
+DigitalButton btn2(PED2, false);
 
 BleKeyboard bleKeyboard;
 
@@ -29,8 +33,20 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Starting work!");
 
-  encoder0.setButtonHeldEnabled(true);
-  encoder0.setDoubleClickEnabled(true);
+  encoder1.setButtonHeldEnabled(true);
+  encoder1.setDoubleClickEnabled(true);
+  encoder2.setButtonHeldEnabled(true);
+  encoder2.setDoubleClickEnabled(true);
+  encoder3.setButtonHeldEnabled(true);
+  encoder3.setDoubleClickEnabled(true);
+  encoder4.setButtonHeldEnabled(true);
+  encoder4.setDoubleClickEnabled(true);
+  encoder5.setButtonHeldEnabled(true);
+  encoder5.setDoubleClickEnabled(true);
+  // pedal1.setButtonHeldEnabled(true);
+  // pedal1.setDoubleClickEnabled(true);
+  // pedal2.setButtonHeldEnabled(true);
+  // pedal2.setButtonHeldEnabled(true);
 
   bleKeyboard.begin();
 }
@@ -73,26 +89,53 @@ void loop() {
   static uint32_t lastService = 0;
   if (micros() - lastService >= 1000) {
     lastService = micros();                
+    btn1.service();
+    btn2.service();
 
-   for (int i = 0; i < ENCODER_COUNT; i++) {
-    encoders[i].service();
-    static int16_t lastValue[ENCODER_COUNT] = {0};
-    static int16_t value[ENCODER_COUNT] = {0};
-    value[i] += encoders[i].getValue();
-    if (value[i] != lastValue[i]) {
-      lastValue[i] = value[i];
-      Serial.print("Encoder ");
-      Serial.print(i + 1);
-      Serial.print(" Value: ");
-      Serial.println(value[i]);
+    for (int i = 0; i < ENCODER_COUNT; i++) {
+      encoders[i].service();
+      static int16_t lastValue[ENCODER_COUNT] = {0};
+      static int16_t value[ENCODER_COUNT] = {0};
+      value[i] += encoders[i].getValue();
+      if (value[i] != lastValue[i]) {
+        lastValue[i] = value[i];
+        Serial.print("Encoder ");
+        Serial.print(i + 1);
+        Serial.print(" Value: ");
+        Serial.println(value[i]);
+      }
+
+      ClickEncoder::Button button = encoders[i].getButton();
+      if (button != ClickEncoder::Open) {
+        Serial.print("Button ");
+        Serial.print(i + 1);
+        Serial.print(": ");
+        switch (button) {
+          case ClickEncoder::Pressed:
+            Serial.println("Pressed");
+            break;
+          case ClickEncoder::Held:
+            Serial.println("Held");
+            break;
+          case ClickEncoder::Released:
+            Serial.println("Released");
+            break;
+          case ClickEncoder::Clicked:
+            Serial.println("Clicked");
+            break;
+          case ClickEncoder::DoubleClicked:
+            Serial.println("DoubleClicked");
+            break;
+        }
+      }
     }
+  }
 
-    ClickEncoder::Button button = encoders[i].getButton();
-    if (button != ClickEncoder::Open) {
-      Serial.print("Button ");
-      Serial.print(i + 1);
-      Serial.print(": ");
-      switch (button) {
+// pedal 1
+    ClickEncoder::Button pedal1 = btn1.getButton();
+    if (pedal1 != ClickEncoder::Open) {
+      Serial.print("Pedal 1:");
+      switch (pedal1) {
         case ClickEncoder::Pressed:
           Serial.println("Pressed");
           break;
@@ -110,8 +153,29 @@ void loop() {
           break;
       }
     }
-  }
-  }
 
-}
+// pedal 2
+    ClickEncoder::Button pedal2 = btn2.getButton();
+    if (pedal2 != ClickEncoder::Open) {
+      Serial.print("Pedal 2:");
+      switch (pedal2) {
+        case ClickEncoder::Pressed:
+          Serial.println("Pressed");
+          break;
+        case ClickEncoder::Held:
+          Serial.println("Held");
+          break;
+        case ClickEncoder::Released:
+          Serial.println("Released");
+          break;
+        case ClickEncoder::Clicked:
+          Serial.println("Clicked");
+          break;
+        case ClickEncoder::DoubleClicked:
+          Serial.println("DoubleClicked");
+          break;
+      }
+    }
+
+} // loop end
 
