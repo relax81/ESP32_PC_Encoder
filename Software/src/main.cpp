@@ -75,48 +75,49 @@ void loop() {
 
 
 
-  // Encoder test
+  // Services
   static uint32_t lastService = 0;
   if (micros() - lastService >= 1000) {
     lastService = micros();                
     btn1.service();
     btn2.service();
+  }
 
-    for (int i = 0; i < ENCODER_COUNT; i++) {
-      encoders[i].service();
-      static int16_t lastValue[ENCODER_COUNT] = {0};
-      static int16_t value[ENCODER_COUNT] = {0};
-      value[i] += encoders[i].getValue();
-      if (value[i] != lastValue[i]) {
-        lastValue[i] = value[i];
-        Serial.print("Encoder ");
-        Serial.print(i + 1);
-        Serial.print(" Value: ");
-        Serial.println(value[i]);
-      }
+  // Encoders
+  for (int i = 0; i < ENCODER_COUNT; i++) {
+    encoders[i].service();
+    static int16_t lastValue[ENCODER_COUNT] = {0};
+    static int16_t value[ENCODER_COUNT] = {0};
+    value[i] += encoders[i].getValue();
+    if (value[i] != lastValue[i]) {
+      lastValue[i] = value[i];
+      Serial.print("Encoder ");
+      Serial.print(i + 1);
+      Serial.print(" Value: ");
+      Serial.println(value[i]);
+    }
 
-      ClickEncoder::Button button = encoders[i].getButton();
-      if (button != ClickEncoder::Open) {
-        Serial.print("Button ");
-        Serial.print(i + 1);
-        Serial.print(": ");
-        switch (button) {
-          case ClickEncoder::Pressed:
-            Serial.println("Pressed");
-            break;
-          case ClickEncoder::Held:
-            Serial.println("Held");
-            break;
-          case ClickEncoder::Released:
-            Serial.println("Released");
-            break;
-          case ClickEncoder::Clicked:
-            Serial.println("Clicked");
-            break;
-          case ClickEncoder::DoubleClicked:
-            Serial.println("DoubleClicked");
-            break;
-        }
+    ClickEncoder::Button button = encoders[i].getButton();
+    if (button != ClickEncoder::Open) {
+      Serial.print("Button ");
+      Serial.print(i + 1);
+      Serial.print(": ");
+      switch (button) {
+        case ClickEncoder::Pressed:
+          Serial.println("Pressed");
+          break;
+        case ClickEncoder::Held:
+          Serial.println("Held");
+          break;
+        case ClickEncoder::Released:
+          Serial.println("Released");
+          break;
+        case ClickEncoder::Clicked:
+          Serial.println("Clicked");
+          break;
+        case ClickEncoder::DoubleClicked:
+          Serial.println("DoubleClicked");
+          break;
       }
     }
   }
