@@ -1,3 +1,6 @@
+// Important note
+// To make Keys F13-F24 work check the BleKeyboard.cpp library file and change logical_maximum and usage_maximum from 0x65 to 0x73
+
 #include <Arduino.h>
 #include <BleKeyboard.h>
 #include "pin_def.h"
@@ -26,7 +29,7 @@ ClickEncoder encoders[ENCODER_COUNT] = {encoder1, encoder2, encoder3, encoder4, 
 DigitalButton btn1(PED1, false);
 DigitalButton btn2(PED2, false);
 
-BleKeyboard bleKeyboard;
+BleKeyboard bleKeyboard("Sound Control", "LetsTinker", 100);
 
 void setup() {
   // put your setup code here, to run once:
@@ -90,6 +93,74 @@ void loop() {
     static int16_t value[ENCODER_COUNT] = {0};
     value[i] += encoders[i].getValue();
     if (value[i] != lastValue[i]) {
+
+      // BLE Button Part start
+      if(bleKeyboard.isConnected()) {
+        if (value[i] > lastValue[i]) {
+          switch(i){
+            case 0:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F13);
+              bleKeyboard.releaseAll();
+              break;
+            case 1: 
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F15);
+              bleKeyboard.releaseAll();
+              break;
+            case 2:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F17);
+              bleKeyboard.releaseAll();
+              break;
+            case 3:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F19);
+              bleKeyboard.releaseAll();
+              break;
+            case 4:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F21);
+              bleKeyboard.releaseAll();
+              break;
+            default: 
+              break;
+          }
+        }
+
+        else if (value[i] < lastValue[i]){
+          switch(i){
+            case 0:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F14);
+              bleKeyboard.releaseAll();
+              break;
+            case 1:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F16);
+              bleKeyboard.releaseAll();
+              break;
+            case 2:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F18);
+              bleKeyboard.releaseAll();
+              break;
+            case 3: 
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F20);
+              bleKeyboard.releaseAll();
+              break;
+            case 4:
+              bleKeyboard.press(KEY_LEFT_CTRL);
+              bleKeyboard.press(KEY_F22);
+              bleKeyboard.releaseAll();
+              break;
+            default:
+              break;
+          }
+        }
+	    }
+      // BLE Button Part end
       lastValue[i] = value[i];
       Serial.print("Encoder ");
       Serial.print(i + 1);
@@ -114,6 +185,39 @@ void loop() {
           break;
         case ClickEncoder::Clicked:
           Serial.println("Clicked");
+
+          if(bleKeyboard.isConnected()) {
+            switch (i) {
+              case 0: 
+                bleKeyboard.press(KEY_LEFT_SHIFT);
+                bleKeyboard.press(KEY_F13);
+                bleKeyboard.releaseAll();
+                break;
+              case 1: 
+                bleKeyboard.press(KEY_LEFT_SHIFT);
+                bleKeyboard.press(KEY_F14);
+                bleKeyboard.releaseAll();
+                break;
+              case 2:
+                bleKeyboard.press(KEY_LEFT_SHIFT);
+                bleKeyboard.press(KEY_F15);
+                bleKeyboard.releaseAll();
+                break;
+              case 3:
+                bleKeyboard.press(KEY_LEFT_SHIFT);
+                bleKeyboard.press(KEY_F16);
+                bleKeyboard.releaseAll();
+                break;
+              case 4:
+                bleKeyboard.press(KEY_LEFT_SHIFT);
+                bleKeyboard.press(KEY_F17);
+                bleKeyboard.releaseAll();
+                break;
+              default:
+                break;
+              }
+	          }
+
           break;
         case ClickEncoder::DoubleClicked:
           Serial.println("DoubleClicked");
@@ -138,6 +242,11 @@ void loop() {
           break;
         case ClickEncoder::Clicked:
           Serial.println("Clicked");
+          if(bleKeyboard.isConnected()) {
+            bleKeyboard.press(KEY_LEFT_SHIFT);
+            bleKeyboard.press(KEY_F19);
+            bleKeyboard.releaseAll();
+	          }
           break;
         case ClickEncoder::DoubleClicked:
           Serial.println("DoubleClicked");
@@ -161,6 +270,11 @@ void loop() {
           break;
         case ClickEncoder::Clicked:
           Serial.println("Clicked");
+          if(bleKeyboard.isConnected()) {
+            bleKeyboard.press(KEY_LEFT_SHIFT);
+            bleKeyboard.press(KEY_F20);
+            bleKeyboard.releaseAll();
+	          }
           break;
         case ClickEncoder::DoubleClicked:
           Serial.println("DoubleClicked");
