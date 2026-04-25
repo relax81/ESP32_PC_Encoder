@@ -29,7 +29,7 @@ ClickEncoder encoders[ENCODER_COUNT] = {encoder1, encoder2, encoder3, encoder4, 
 DigitalButton btn1(PED1, false);
 DigitalButton btn2(PED2, false);
 
-BleKeyboard bleKeyboard("Sound Control", "LetsTinker", 100);
+BleKeyboard bleKeyboard("SoundControl2", "LetsTinker", 100);
 
 void setup() {
   // put your setup code here, to run once:
